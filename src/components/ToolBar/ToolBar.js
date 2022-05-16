@@ -1,5 +1,7 @@
 import React from "react";
+import { Grid } from "@mui/material";
 import { Button } from "@mui/material";
+import { TextField } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { DitheringOptions, QuantizationOptions, ResizeOptions } from "../../Constants";
 import "./ToolBar.scss";
@@ -63,53 +65,90 @@ const ToolBar = (props) => {
   return (
     <div className="toolbar-wrapper">
       <div className="toolbar">
-        <Button variant="contained">Upload</Button>
+        <Grid container spacing={4}>
+          <Grid item md={2}>
+            <Button variant="contained" fullWidth>Upload</Button>
+          </Grid>
+          <Grid item md={2}>
+            <Button variant="contained" fullWidth>Render</Button>
+          </Grid>
+          <Grid item md={2}>
+            <Button variant="contained" fullWidth>Download</Button>
+          </Grid>
+        </Grid>
 
-        <FormControl >
-          <InputLabel id="quantization-algorithm-select-label">Quantization Algorithm</InputLabel>
-          <Select 
-            labelId="quantization-algorithm-select-label"
-            id="quantization-algorithm-select"
-            value={ props.appState.quantization }
-            label="Quantization Algorithm"
-            size="small"
-            onChange={ handleQuantizationAlgorithmChange }
-          >
-            { generateMenuItems(QuantizationOptions) }
-          </Select>
-        </FormControl>
-
-        <FormControl>
-          <InputLabel id="dithering-algorithm-select-label">Dithering Algorithm</InputLabel>
-          <Select 
-            labelId="dithering-algorithm-select-label"
-            id="dithering-algorithm-select"
-            value={ props.appState.dither }
-            label="Dithering Algorithm"
-            size="small"
-            onChange={ handleDitheringAlgorithmChange }
-          >
-            { generateMenuItems(DitheringOptions) }
-          </Select>
-        </FormControl>
-
-        <FormControl>
-          <InputLabel id="resize-select-label">Resize Method</InputLabel>
-          <Select 
-            labelId="resize-select-label"
-            id="resize-select"
-            value={ props.appState.resize }
-            label="Resize Method"
-            size="small"
-            onChange={ handleResizeMethodChange }
-          >
-            { generateMenuItems(ResizeOptions) }
-          </Select>
-        </FormControl>
+        <Grid container spacing={4}>
+          <Grid item xs={4}>
+            <FormControl fullWidth>
+              <InputLabel id="quantization-algorithm-select-label">Quantization Algorithm</InputLabel>
+              <Select 
+                labelId="quantization-algorithm-select-label"
+                id="quantization-algorithm-select"
+                value={ props.appState.quantization }
+                label="Quantization Algorithm"
+                size="small"
+                onChange={ handleQuantizationAlgorithmChange }
+              >
+                { generateMenuItems(QuantizationOptions) }
+              </Select>
+            </FormControl>
+          </Grid>
         
+          <Grid item xs={4}>
+            <FormControl fullWidth>
+              <InputLabel id="dithering-algorithm-select-label">Dithering Algorithm</InputLabel>
+              <Select 
+                labelId="dithering-algorithm-select-label"
+                id="dithering-algorithm-select"
+                value={ props.appState.dither }
+                label="Dithering Algorithm"
+                size="small"
+                onChange={ handleDitheringAlgorithmChange }
+              >
+                { generateMenuItems(DitheringOptions) }
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        
+        <Grid container spacing={4}>
+          <Grid item xs={4}>
+            <FormControl fullWidth>
+              <InputLabel id="resize-select-label">Resize Method</InputLabel>
+              <Select fullWidth
+                labelId="resize-select-label"
+                id="resize-select"
+                value={ props.appState.resize }
+                label="Resize Method"
+                size="small"
+                onChange={ handleResizeMethodChange }
+              >
+                { generateMenuItems(ResizeOptions) }
+              </Select>
+            </FormControl>
+          </Grid>
 
-        <Button variant="contained">Render</Button>
-        <Button variant="contained">Download</Button>
+          <Grid item xs={2}>
+            <TextField fullWidth
+              id="resize-width-textfield" 
+              label="Width" 
+              variant="filled" 
+              size="small" 
+              disabled={ !props.appState.shouldResize }
+            />
+          </Grid>
+          
+          <Grid item xs={2}>
+            <TextField fullWidth
+              id="resize-height-textfield" 
+              label="Height" 
+              variant="filled" 
+              size="small" 
+              disabled={ !props.appState.shouldResize }
+            />
+          </Grid>
+        </Grid>
+    
       </div>
     </div>
   )

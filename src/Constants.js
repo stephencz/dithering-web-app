@@ -1,4 +1,5 @@
 export const DitheringOptions = {
+  NONE: "None",
   FLOYD_STEINBERG: "Floyd Steinberg (Error Diffusion)",
   STUCKI: "Stucki (Error Diffusion)",
   BURKES: "Burkes (Error Diffusion)",
@@ -10,6 +11,7 @@ export const DitheringOptions = {
 }
 
 export const QuantizationOptions = {
+  NONE: "None",
   MEDIAN_CUT: "Median Cut",
   OCTRESS: "Octrees"
 }
