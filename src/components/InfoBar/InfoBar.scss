@@ -1,7 +1,9 @@
+@import '../../colors.scss';
+
 .infobar-wrapper
 {
-  border-top: 4px solid #a8a8a8;
-  background-color: #343434;
+  border-top: 4px solid $color-ui-border;
+  background-color: $color-ui-bg;
 
   height: 40px;
   width: 100%;
