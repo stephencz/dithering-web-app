@@ -6,7 +6,7 @@ import ImagePreview from './components/ImagePreview/ImagePreview';
 import InfoBar from './components/InfoBar/InfoBar';
 
 import './App.scss';
-import { DitheringOptions } from './Constants';
+import { DitheringOptions, QuantizationOptions } from './Constants';
 
 const App = () => {
 
@@ -14,7 +14,7 @@ const App = () => {
     originalImage: null,
     renderedImage: null,
     dither: DitheringOptions.FLOYD_STEINBERG,
-    quantize: null,
+    quantization: QuantizationOptions.MEDIAN_CUT,
     resize: null
   });
 

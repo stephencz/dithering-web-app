@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import { DitheringOptions } from "../../Constants";
+import { DitheringOptions, QuantizationOptions } from "../../Constants";
 import "./ToolBar.scss";
 
 /**
@@ -14,6 +14,13 @@ import "./ToolBar.scss";
  */
 const ToolBar = (props) => {
 
+  const handleQuantizationAlgorithmChange = (event) => {
+    props.setAppState({
+      ...props.appState,
+      quantization: event.target.value
+    });
+  }
+
   const handleDitheringAlgorithmChange = (event) => {
     props.setAppState({
       ...props.appState,
@@ -21,11 +28,11 @@ const ToolBar = (props) => {
     });
   }
 
-  const generateDitheringAlgorithmSelectMenuItems = () => {  
+  const generateMenuItems = (dictionary) => {  
 
     let menuItems = []
 
-    for(const [key, value] of Object.entries(DitheringOptions)) {
+    for(const [key, value] of Object.entries(dictionary)) {
       menuItems = [...menuItems, <MenuItem key={key} value={value}>{ value }</MenuItem>]
     }
 
@@ -37,7 +44,22 @@ const ToolBar = (props) => {
       <div className="toolbar">
         <Button variant="contained">Upload</Button>
         <Button variant="contained">Download</Button>
-        <FormControl fullWidth>
+
+        <FormControl >
+          <InputLabel id="quantization-algorithm-select-label">Quantization Algorithm</InputLabel>
+          <Select 
+            labelId="quantization-algorithm-select-label"
+            id="quantization-algorithm-select"
+            value={ props.appState.quantization }
+            label="Quantization Algorithm"
+            size="small"
+            onChange={ handleQuantizationAlgorithmChange }
+          >
+            { generateMenuItems(QuantizationOptions) }
+          </Select>
+        </FormControl>
+
+        <FormControl>
           <InputLabel id="dithering-algorithm-select-label">Dithering Algorithm</InputLabel>
           <Select 
             labelId="dithering-algorithm-select-label"
@@ -47,9 +69,10 @@ const ToolBar = (props) => {
             size="small"
             onChange={ handleDitheringAlgorithmChange }
           >
-            { generateDitheringAlgorithmSelectMenuItems() }
+            { generateMenuItems(DitheringOptions) }
           </Select>
         </FormControl>
+        
       </div>
     </div>
   )

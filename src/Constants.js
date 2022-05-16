@@ -10,7 +10,8 @@ export const DitheringOptions = {
 }
 
 export const QuantizationOptions = {
-
+  MEDIAN_CUT: "Median Cut",
+  OCTRESS: "Octrees"
 }
 
 export const ResizeOptions = {
