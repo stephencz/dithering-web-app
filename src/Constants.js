@@ -15,5 +15,8 @@ export const QuantizationOptions = {
 }
 
 export const ResizeOptions = {
-  
+  NONE: "None",
+  NEARTEST_NEIGHBOR: "Neartest-Neighbor",
+  BILINEAR: "Bilinear",
+  BICUBIC: "Bicubic"
 }

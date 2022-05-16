@@ -6,16 +6,20 @@ import ImagePreview from './components/ImagePreview/ImagePreview';
 import InfoBar from './components/InfoBar/InfoBar';
 
 import './App.scss';
-import { DitheringOptions, QuantizationOptions } from './Constants';
+import { DitheringOptions, QuantizationOptions, ResizeOptions } from './Constants';
 
 const App = () => {
 
   const [appState, setAppState] = useState({
     originalImage: null,
+    resizedImage: null,
     renderedImage: null,
     dither: DitheringOptions.FLOYD_STEINBERG,
     quantization: QuantizationOptions.MEDIAN_CUT,
-    resize: null
+    shouldResize: false,
+    resize: ResizeOptions.NONE,
+    resizeWidth: 0,
+    resizeHeight: 0
   });
 
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import { DitheringOptions, QuantizationOptions } from "../../Constants";
+import { DitheringOptions, QuantizationOptions, ResizeOptions } from "../../Constants";
 import "./ToolBar.scss";
 
 /**
@@ -28,6 +28,27 @@ const ToolBar = (props) => {
     });
   }
 
+  const handleResizeMethodChange = (event) => {
+    console.log(event);
+
+    if(event.target.value === "None") {
+      props.setAppState({
+        ...props.appState,
+        shouldResize: false,
+        resize: ResizeOptions.NONE,
+        resizeWidth: 0,
+        resizeHeight: 0
+      });
+
+    } else {
+      props.setAppState({
+        ...props.appState,
+        shouldResize: true,
+        resize: event.target.value,
+      });
+    }
+  }
+
   const generateMenuItems = (dictionary) => {  
 
     let menuItems = []
@@ -43,7 +64,6 @@ const ToolBar = (props) => {
     <div className="toolbar-wrapper">
       <div className="toolbar">
         <Button variant="contained">Upload</Button>
-        <Button variant="contained">Download</Button>
 
         <FormControl >
           <InputLabel id="quantization-algorithm-select-label">Quantization Algorithm</InputLabel>
@@ -72,7 +92,24 @@ const ToolBar = (props) => {
             { generateMenuItems(DitheringOptions) }
           </Select>
         </FormControl>
+
+        <FormControl>
+          <InputLabel id="resize-select-label">Resize Method</InputLabel>
+          <Select 
+            labelId="resize-select-label"
+            id="resize-select"
+            value={ props.appState.resize }
+            label="Resize Method"
+            size="small"
+            onChange={ handleResizeMethodChange }
+          >
+            { generateMenuItems(ResizeOptions) }
+          </Select>
+        </FormControl>
         
+
+        <Button variant="contained">Render</Button>
+        <Button variant="contained">Download</Button>
       </div>
     </div>
   )
