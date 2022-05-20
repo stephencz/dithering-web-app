@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 import ToolBar from './components/ToolBar/ToolBar';
 import ImagePreview from './components/ImagePreview/ImagePreview';
-import InfoBar from './components/InfoBar/InfoBar';
 
 import './App.scss';
 import { DitheringOptions, QuantizationOptions, ResizeOptions } from './Constants';
@@ -24,8 +23,7 @@ const App = () => {
   return (
     <div className="app">
       <ToolBar appState={ appState} setAppState={ setAppState }/>
-      <ImagePreview />
-      <InfoBar />
+      <ImagePreview appState={ appState } />
     </div>    
   );
 

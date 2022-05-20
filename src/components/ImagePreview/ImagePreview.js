@@ -8,10 +8,23 @@ import "./ImagePreview.scss";
  */
 const ImagePreview = (props) => {
 
+  const getImage = () => {
+    if(props.appState.originalImage !== null) {
+      return (
+        <img src={props.appState.originalImage.content} />
+      );
+
+    } else {
+      return (
+        <p>No image loaded</p>
+      );
+    }
+  }
+
   return (
     <div className="image-preview-wrapper">
       <div className="image-preview">
-
+        { getImage() }
       </div>
     </div>
   );
