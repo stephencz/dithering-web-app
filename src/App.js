@@ -12,7 +12,6 @@ const App = () => {
 
   const [appState, setAppState] = useState({
     originalImage: null,
-    resizedImage: null,
     renderedImage: null,
     dither: DitheringOptions.NONE,
     quantization: QuantizationOptions.NONE,

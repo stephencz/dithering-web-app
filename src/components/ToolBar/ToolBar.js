@@ -1,9 +1,14 @@
 import React from "react";
+import { useEffect } from "react";
+
 import { Grid } from "@mui/material";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { DitheringOptions, QuantizationOptions, ResizeOptions } from "../../Constants";
+
+import { useFilePicker } from "use-file-picker";
+
 import "./ToolBar.scss";
 
 /**
@@ -11,11 +16,47 @@ import "./ToolBar.scss";
  * the user does the bulk of their interaction with. It provides
  * an interface for loading an image, applying the different effects
  * to it, and downloading the final product.
- * 
- * The view includes image panning and zooming.
  */
 const ToolBar = (props) => {
 
+  // The useFilePicker hook provides an easy way to open the file selection dialog
+  // filesContent is an array of files, clear, clears the array.
+  const [openFileSelector, {filesContent, clear}] = useFilePicker({
+    readAs: 'DataURL',
+    accept: 'image/*',
+    multiple: false,
+    maxFileSize: 50,
+  })
+
+  // Because the component will re-render when filesContent is updated,
+  // this effect checks if the filesContent array of files has a file in
+  // it, updates the applications state with that file, and then clears
+  // the filesContent array to avoid maximum depth exceeded error from
+  // update loop.
+  useEffect(() => {
+    if(filesContent.length > 0) {
+      props.setAppState({...props.appState, originalImage: filesContent[0]});
+      clear();
+    }
+
+  }, [filesContent, clear, props]);
+
+  /**
+   * Clears existing loaded files, and opens the file selector.
+   * @param {*} event 
+   */
+  const handleImageUpload = (event) => {
+    if(filesContent.length > 0) {
+      clear();
+    }
+
+    openFileSelector();
+  }
+
+  /**
+   * Updates the quanitzation algorithm the application is using.
+   * @param {*} event 
+   */
   const handleQuantizationAlgorithmChange = (event) => {
     props.setAppState({
       ...props.appState,
@@ -23,6 +64,10 @@ const ToolBar = (props) => {
     });
   }
 
+  /**
+   * Updates the dithering algorithm the application is using.
+   * @param {*} event 
+   */
   const handleDitheringAlgorithmChange = (event) => {
     props.setAppState({
       ...props.appState,
@@ -30,6 +75,11 @@ const ToolBar = (props) => {
     });
   }
 
+  /**
+   * Updates the resize method the application is using, and sets
+   * the shouldResize flag to true or false.
+   * @param {*} event 
+   */
   const handleResizeMethodChange = (event) => {
     console.log(event);
 
@@ -51,6 +101,11 @@ const ToolBar = (props) => {
     }
   }
 
+  /**
+   * Generates a MUI Select menu items from the passed in dictionary.
+   * @param {*} dictionary A dictionary of string values.
+   * @returns React Elements
+   */
   const generateMenuItems = (dictionary) => {  
 
     let menuItems = []
@@ -67,7 +122,13 @@ const ToolBar = (props) => {
       <div className="toolbar">
         <Grid container spacing={4}>
           <Grid item md={2}>
-            <Button variant="contained" fullWidth>Upload</Button>
+            <Button 
+              variant="contained" 
+              fullWidth 
+              onClick={ handleImageUpload }
+            >
+              Upload
+            </Button>
           </Grid>
           <Grid item md={2}>
             <Button variant="contained" fullWidth>Render</Button>
